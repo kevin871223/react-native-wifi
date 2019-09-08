@@ -160,6 +160,19 @@ public class RNWifiModule extends ReactContextBaseJavaModule {
         }
     }
 
+	@ReactMethod
+	public void getSSID(final Callback callback) {
+		WifiInfo info = wifi.getConnectionInfo();
+
+		// This value should be wrapped in double quotes, so we need to unwrap it.
+		String ssid = info.getSSID();
+		if (ssid.startsWith("\"") && ssid.endsWith("\"")) {
+			ssid = ssid.substring(1, ssid.length() - 1);
+		}
+
+		callback.invoke(ssid);
+	}
+
 	//Method to check if wifi is enabled
 	@ReactMethod
 	public void isEnabled(Callback isEnabled) {
